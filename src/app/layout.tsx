@@ -1,12 +1,17 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { BackToTop } from "@/components/ui/BackToTop";
 import { WhatsAppWidget } from "@/components/layout/WhatsAppWidget";
 import { Breadcrumbs } from "@/components/layout/Breadcrumbs";
 import { FloatingAdmissionButton } from "@/components/ui/FloatingAdmissionButton";
+
+
+import LayoutWrapper from "@/components/layout/LayoutWrapper";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,6 +26,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+
   metadataBase: new URL(process.env.NODE_ENV === 'production' ? 'https://ghss.edu' : 'http://localhost:3000'),
   title: {
     default: "LMS Girls Higher Secondary School | Official Website",
@@ -95,37 +101,45 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en" className="scroll-smooth">
       <head>
-        {/* Viewport settings for better mobile responsiveness */}
-        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, viewport-fit=cover"
+        />
         <meta name="theme-color" content="#1a56db" />
         <meta name="color-scheme" content="light" />
-        
-        {/* Performance hints */}
-        <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
-        
-        {/* Additional SEO */}
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="GHSS" />
+
+        <link
+          rel="preconnect"
+          href="https://images.unsplash.com"
+          crossOrigin="anonymous"
+        />
+
+        <meta
+          name="apple-mobile-web-app-capable"
+          content="yes"
+        />
+        <meta
+          name="apple-mobile-web-app-status-bar-style"
+          content="default"
+        />
+        <meta
+          name="apple-mobile-web-app-title"
+          content="GHSS"
+        />
       </head>
-      <body 
+
+      <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
-        <Navbar />
-        <Breadcrumbs />
-        <main id="main-content" className="flex-grow pt-20" tabIndex={-1}>
+        <LayoutWrapper>
           {children}
-        </main>
-        <Footer />
-        <BackToTop />
-        <WhatsAppWidget />
-        <FloatingAdmissionButton />
+        </LayoutWrapper>
       </body>
     </html>
   );
